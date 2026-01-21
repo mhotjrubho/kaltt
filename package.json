@@ -1,0 +1,13 @@
+{
+  "name": "kalttoffline",
+  "version": "0.1.0",
+  "description": "מערכת אוף-ליין לניהול קמפיין התחייבויות ואיסוף תרומות עם דשבורד ותצוגה גדולה, RTL מלא ותאריך עברי.",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^30.0.0",
+    "dayjs": "^1.11.0"
+  }
+}

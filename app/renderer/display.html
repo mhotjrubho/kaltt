@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>מסך תצוגה - kalttoffline</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="display-root rtl-container">
+      <header class="display-header">
+        <div>
+          <div style="font-size:1.4rem;font-weight:800;">קמפיין פורים – יעד כללי <span id="display-total-target">0</span> ₪</div>
+          <div style="font-size:0.9rem;color:#9ca3af;">תצוגת קבוצות, פרימיום, הגרלות וגרפים · RTL מלא · תאריך עברי</div>
+        </div>
+        <div style="text-align:left;font-size:0.85rem;color:#9ca3af;">
+          <div id="display-hebrew-date"></div>
+          <div id="display-active-lottery" style="color:#facc15;"></div>
+        </div>
+      </header>
+      <section class="display-premium-strip" id="display-premium-strip"></section>
+      <main class="display-groups-grid" id="display-groups-grid"></main>
+      <footer class="ticker-bar">
+        <div class="ticker-inner" id="ticker-inner"></div>
+      </footer>
+      <div class="toast-container" id="display-toast-container"></div>
+    </div>
+    <script src="./display.js"></script>
+  </body>
+</html>

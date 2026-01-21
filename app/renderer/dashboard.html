@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>דשבורד ניהול - kalttoffline</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-root rtl-container dashboard-layout">
+      <aside class="sidebar">
+        <div>
+          <div class="sidebar-title">kalttoffline</div>
+          <div class="header-subtitle">דשבורד ניהול · RTL מלא · תאריך עברי</div>
+        </div>
+        <div>
+          <div class="sidebar-section-title">ניווט עיקרי</div>
+          <button class="nav-link active" data-view="commitments">ניהול התחייבויות</button>
+          <button class="nav-link" data-view="collect-days">איסוף בפועל</button>
+          <button class="nav-link" data-view="persons">מאגר בחורים</button>
+          <button class="nav-link" data-view="groups">קבוצות ולוגואים</button>
+          <button class="nav-link" data-view="lotteries">הגרלות</button>
+          <button class="nav-link" data-view="announcements">הודעות ובאנרים</button>
+        </div>
+        <div>
+          <div class="sidebar-section-title">הגדרות</div>
+          <button class="nav-link" data-view="design">עיצוב וצבעים (RTL מלא)</button>
+          <button class="nav-link" data-view="years">שנים וארכיון</button>
+          <button class="nav-link" data-view="users">משתמשים והרשאות</button>
+          <button class="nav-link" data-view="settings">הגדרות כלליות</button>
+        </div>
+        <div style="margin-top:auto;font-size:0.75rem;color:#9ca3af;">
+          <div>קרדיט: משה א.</div>
+          <div>"נהנתם, רוצים לתמוך בי? ניתן לשלוח מייל לקבלת פרטים לתמיכה"</div>
+        </div>
+      </aside>
+      <header class="header">
+        <div>
+          <div class="header-title">ניהול ערב קמפיין ופורים</div>
+          <div class="header-subtitle">הזנת בחורים, התחייבויות, בוגרים וימי איסוף · תצוגה בעברית ותאריך עברי</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span id="current-year-label" class="header-subtitle"></span>
+          <span style="width:1px;height:18px;background:rgba(148,163,184,0.5);"></span>
+          <span id="hebrew-date-label" class="header-subtitle"></span>
+        </div>
+      </header>
+      <main class="main">
+        <section id="view-commitments" class="card" data-view-section="commitments">
+          <div class="card-title">הזנת התחייבות חדשה (בחור)</div>
+          <div class="form-grid" style="margin-top:8px;align-items:flex-end;">
+            <div>
+              <div class="label">מספר תעודת זהות</div>
+              <input id="input-id" class="input" type="text" autocomplete="off" />
+            </div>
+            <div>
+              <div class="label">שם משפחה ושם פרטי</div>
+              <input id="input-name" class="input" type="text" placeholder="משפחה פרטי" autocomplete="off" />
+            </div>
+            <div>
+              <div class="label">קבוצה</div>
+              <select id="input-group" class="select"></select>
+            </div>
+            <div>
+              <div class="label">יעד אישי (₪)</div>
+              <input id="input-target" class="input" type="number" min="0" step="50" />
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;padding-top:18px;">
+              <input id="input-premium" type="checkbox" />
+              <label for="input-premium" class="label">סימון V ליעד גבוה מאוד (פרימיום)</label>
+            </div>
+            <div style="text-align:left;">
+              <button id="btn-add-commitment" class="button-primary">הוספת התחייבות ושמירה</button>
+            </div>
+          </div>
+          <table class="table" id="table-commitments">
+            <thead>
+              <tr>
+                <th>ת.ז</th>
+                <th>שם</th>
+                <th>קבוצה</th>
+                <th>יעד (₪)</th>
+                <th>פרימיום</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+
+        <section id="view-groups" class="card" data-view-section="groups" style="display:none;margin-top:16px;">
+          <div class="card-title">ניהול קבוצות ולוגואים</div>
+          <div class="form-grid" style="margin-top:8px;align-items:flex-end;">
+            <div>
+              <div class="label">מזהה קבוצה (לטובת מסד הנתונים)</div>
+              <input id="group-id" class="input" type="text" autocomplete="off" />
+            </div>
+            <div>
+              <div class="label">שם קבוצה</div>
+              <input id="group-name" class="input" type="text" autocomplete="off" />
+            </div>
+            <div style="text-align:left;">
+              <button id="btn-save-group" class="button-primary">שמירת קבוצה</button>
+            </div>
+          </div>
+          <table class="table" id="table-groups">
+            <thead>
+              <tr>
+                <th>מזהה</th>
+                <th>שם קבוצה</th>
+                <th>פעולות</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+
+        <section id="view-persons" class="card" data-view-section="persons" style="display:none;margin-top:16px;">
+          <div class="card-title">מאגר בחורים – תעודות זהות, שמות ושיוך לקבוצה</div>
+          <div class="form-grid" style="margin-top:8px;align-items:flex-end;">
+            <div>
+              <div class="label">מספר תעודת זהות</div>
+              <input id="person-id" class="input" type="text" autocomplete="off" />
+            </div>
+            <div>
+              <div class="label">שם משפחה ושם פרטי</div>
+              <input id="person-name" class="input" type="text" placeholder="משפחה פרטי" autocomplete="off" />
+            </div>
+            <div>
+              <div class="label">קבוצה</div>
+              <select id="person-group" class="select"></select>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;padding-top:18px;">
+              <input id="person-premium" type="checkbox" />
+              <label for="person-premium" class="label">V ליעד גבוה מאוד (פרימיום)</label>
+            </div>
+            <div style="text-align:left;">
+              <button id="btn-save-person" class="button-primary">שמירת בחור</button>
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px;align-items:center;">
+            <div class="label">חיפוש מהיר</div>
+            <input id="person-search" class="input" type="text" placeholder="חיפוש לפי ת.ז או שם" style="max-width:260px;" />
+          </div>
+          <table class="table" id="table-persons">
+            <thead>
+              <tr>
+                <th>ת.ז</th>
+                <th>שם</th>
+                <th>קבוצה</th>
+                <th>פרימיום</th>
+                <th>פעולות</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+
+        <section id="view-collect-days" class="card" data-view-section="collect-days" style="display:none;margin-top:16px;">
+          <div class="card-title">איסוף בפועל (במקום אקסל) – ימים דינמיים וסיכומים</div>
+
+          <div class="form-grid" style="margin-top:8px;align-items:flex-end;">
+            <div>
+              <div class="label">הוספת יום איסוף (שם חופשי)</div>
+              <input id="collect-day-name" class="input" type="text" placeholder="לדוגמה: יום ראשון / פורים" autocomplete="off" />
+            </div>
+            <div style="text-align:left;">
+              <button id="btn-add-collect-day" class="button-primary">הוספת יום</button>
+            </div>
+          </div>
+
+          <table class="table" id="table-collect-days">
+            <thead>
+              <tr>
+                <th>מזהה</th>
+                <th>שם יום</th>
+                <th>פעולות</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <div style="margin-top:12px;display:flex;gap:8px;align-items:center;">
+            <div class="label">חיפוש</div>
+            <input id="collect-search" class="input" type="text" placeholder="סינון לפי ת.ז / שם / קבוצה" style="max-width:320px;" />
+          </div>
+
+          <div class="card" style="margin-top:12px;">
+            <div class="card-title">טבלת איסוף לפי בחורים</div>
+            <div class="header-subtitle">כל שינוי נשמר מיידית מקומית · RTL מלא</div>
+            <div style="overflow:auto;">
+              <table class="table" id="table-collections">
+                <thead></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-announcements" class="card" data-view-section="announcements" style="display:none;margin-top:16px;">
+          <div class="card-title">הודעות ובאנרים (תוקף זמן + תצוגה מקדימה)</div>
+          <div class="form-grid" style="margin-top:8px;align-items:flex-end;">
+            <div>
+              <div class="label">סוג הודעה</div>
+              <select id="ann-type" class="select">
+                <option value="ticker">פס טקסט תחתון (טיקר)</option>
+                <option value="banner">באנר מעוצב (במרכז)</option>
+                <option value="push">הודעת דחיפה (toast)</option>
+              </select>
+            </div>
+            <div>
+              <div class="label">כותרת</div>
+              <input id="ann-title" class="input" type="text" autocomplete="off" />
+            </div>
+            <div>
+              <div class="label">טקסט</div>
+              <input id="ann-text" class="input" type="text" autocomplete="off" />
+            </div>
+            <div>
+              <div class="label">חתימה</div>
+              <input id="ann-signature" class="input" type="text" autocomplete="off" />
+            </div>
+            <div>
+              <div class="label">תוקף (דקות) – ריק = ללא תפוגה</div>
+              <input id="ann-ttl" class="input" type="number" min="1" step="1" />
+            </div>
+            <div style="text-align:left;">
+              <button id="btn-create-ann" class="button-primary">פרסום</button>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:12px;">
+            <div class="card-title">תצוגה מקדימה</div>
+            <div id="ann-preview" style="border-radius:20px;border:1px solid rgba(148,163,184,0.35);padding:12px 14px;background:rgba(15,23,42,0.7);"></div>
+          </div>
+
+          <table class="table" id="table-announcements">
+            <thead>
+              <tr>
+                <th>מזהה</th>
+                <th>סוג</th>
+                <th>כותרת</th>
+                <th>טקסט</th>
+                <th>תוקף</th>
+                <th>פעולות</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+      </main>
+      <div class="toast-container" id="toast-container"></div>
+    </div>
+    <script src="./dashboard.js"></script>
+  </body>
+</html>
